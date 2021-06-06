@@ -15,5 +15,13 @@ terraform apply --var-file="dev.tfvars" --var-file="table_conf_vars/produtos.tfv
 #### Destruir toda a infraestrutura
 terraform destroy --var-file="dev.tfvars" --var-file="table_conf_vars/produtos.tfvars"
 
+### Comandos Terraform
 
+#### Iniciar e construir a infraestrutura
+terraform init
+
+terraform apply --var-file="dev.tfvars" --var-file="table_conf_vars/produtos.tfvars"
+
+#### Destruir toda a infraestrutura
+terraform destroy --var-file="dev.tfvars" --var-file="table_conf_vars/produtos.tfvars"
 
