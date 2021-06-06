@@ -19,3 +19,4 @@ terraform apply --var-file="dev.tfvars" --var-file="table_conf_vars/produtos.tfv
 ```sh
 terraform destroy --var-file="dev.tfvars" --var-file="table_conf_vars/produtos.tfvars"
 ```
+
