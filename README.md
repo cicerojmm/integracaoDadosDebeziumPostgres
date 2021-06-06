@@ -8,9 +8,14 @@ Integração de dados em tempo real com Debezium, Postgres e S3 com deploy utili
 ### Comandos Terraform
 
 #### Iniciar e construir a infraestrutura
+```sh
 terraform init
-
+```
+```sh
 terraform apply --var-file="dev.tfvars" --var-file="table_conf_vars/produtos.tfvars"
+```
 
 #### Destruir toda a infraestrutura
+```sh
 terraform destroy --var-file="dev.tfvars" --var-file="table_conf_vars/produtos.tfvars"
+```
