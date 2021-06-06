@@ -1,0 +1,45 @@
+version: '3'
+services:
+  zookeeper-debezium:
+    image: debezium/zookeeper:1.4
+    container_name: zookeeper-debezium
+    hostname: zookeeper-debezium
+    ports:
+     - 2181:2181
+     - 2888:2888
+     - 3888:3888
+    networks:
+      - debezium-compose-network
+
+  kafka-debezium:
+    image: debezium/kafka:1.4
+    container_name: kafka-debezium
+    hostname: kafka-debezium
+    ports:
+     - 9092:9092
+    links:
+     - zookeeper-debezium
+    environment:
+     - ZOOKEEPER_CONNECT=zookeeper-debezium:2181
+    networks:
+      - debezium-compose-network
+  connect-debezium:
+    image: debezium/connect:1.4
+    container_name: connect-debezium
+    hostname: connect-debezium
+    ports:
+     - 8083:8083
+    links:
+     - kafka-debezium
+    environment:
+     - BOOTSTRAP_SERVERS=kafka-debezium:9092
+     - GROUP_ID=1
+     - CONFIG_STORAGE_TOPIC=my_connect_configs
+     - OFFSET_STORAGE_TOPIC=my_connect_offsets
+     - STATUS_STORAGE_TOPIC=my_connect_statuses
+    networks:
+      - debezium-compose-network
+
+networks: 
+  debezium-compose-network:
+    driver: bridge

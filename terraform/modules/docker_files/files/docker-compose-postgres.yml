@@ -1,0 +1,20 @@
+version: '3'
+
+services:
+  teste-postgres-compose:
+    image: postgres
+    hostname: postgres-pipeline
+    container_name: postgres-pipeline
+    shm_size: 4gb
+    environment:
+      POSTGRES_PASSWORD: "Postgres2021!"
+    ports:
+      - "5432:5432"
+    volumes:
+      - /home/docker/postgres/db:/var/lib/postgresql/data 
+    networks:
+      - debezium-compose-network
+
+networks: 
+  debezium-compose-network:
+    driver: bridge

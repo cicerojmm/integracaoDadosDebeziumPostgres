@@ -1,0 +1,16 @@
+{
+	"name": "vendas-connector",
+	"config": {
+		"connector.class": "io.debezium.connector.postgresql.PostgresConnector",
+		"tasks.max": "1",
+		"database.hostname": "postgres-pipeline",
+		"database.port": "5432",
+		"database.user": "postgres",
+		"database.password": "Postgres2021!",
+		"database.dbname": "vendas",
+		"database.server.name": "vendas",
+		"table.include.list": "public.produtos,public.item_vendas",
+		"plugin.name": "pgoutput",
+		"slot.name": "slotvendas"
+	}
+}
