@@ -1,6 +1,5 @@
 resource "aws_s3_bucket" "template_bucket" {
   bucket = lower(local.bucket_name_concat)
-  acl    = var.acl
 
   tags = merge({
     Name        = lower(local.bucket_name_concat)

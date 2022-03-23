@@ -32,7 +32,7 @@ def _generate_steps(
     Returns:
         list: list of steps to run
     """    
-    key_path_cdc = 'kafka/cdc'
+    key_path_cdc = 'topics'
     key_path_processing = 'kafka/processing'
     key_path_archive = 'kafka/archive'
 
@@ -48,7 +48,7 @@ def _generate_steps(
                     '--src',
                     f's3://{bucket_raw}/{key_path_cdc}',
                     '--dest',
-                    f's3://{bucket_raw}/{key_path_processing}',
+                    f's3://{bucket_raw}/{key_path_processing}/public',
                     '--deleteOnSuccess'
                 ]
         },
@@ -141,17 +141,10 @@ def handler(event, context):
 
     spark_job_script = os.environ['SPARK_JOB_SCRIPT']
 
-    logUri = f"s3n://debezium-kafka-stack-{accountID}-{environment.lower()}-configs/logs/"
+    logUri = f"s3://debezium-kafka-stack-{accountID}-{environment.lower()}-configs/logs/"
     releaseLabel = "emr-6.1.0"
 
     clusterName = f"EMR-DELTALAKE-{environment}-PROCESSING"
-
-    tags = {
-        'Owner': os.environ['Owner'],
-        'PURPOSE': os.environ['PURPOSE'],
-        'COST_CENTER': os.environ['COST_CENTER'],
-        'Name': clusterName
-    }
 
     config = _get_config_from_s3_bucket(
         bucket_config=bucket_config, config_path=config_path)
@@ -176,13 +169,6 @@ def handler(event, context):
         Name=clusterName,
         LogUri=logUri,
         ReleaseLabel=releaseLabel,
-        Tags=[
-            {
-                'Key': k,
-                'Value': v
-            }
-            for k, v in tags.items()
-        ],
         Instances={
             'InstanceGroups': [
                 {
@@ -275,7 +261,7 @@ def handler(event, context):
         JobFlowRole='EMR_EC2_DefaultRole',
         ServiceRole='EMR_DefaultRole',
         EbsRootVolumeSize=10,
-        StepConcurrencyLevel=1
+        StepConcurrencyLevel=1,
     )
 
     print(json.dumps(response, indent=4))

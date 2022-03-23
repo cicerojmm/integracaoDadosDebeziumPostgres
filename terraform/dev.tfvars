@@ -15,13 +15,13 @@ lambda_environment =  [
   {
     function_name        = "EMR-DELTALAKE"
     keypair_name         = "debezium"
-    master_instance_type = "r5.xlarge"
-    core_instance_type   = "r5.xlarge"
-    instance_count       = 2
+    master_instance_type = "m5.xlarge"
+    core_instance_type   = "m5.xlarge"
+    instance_count       = 1
     ec2_master_name      = "EMR-DELTALAKE-MASTER"
     ec2_core_name        = "EMR-DELTALAKE-CORE"
     ebs_size_gb          = 50
-    ec2_subnet_id        = "subnet-dc9a2bba"
+    ec2_subnet_id        = "subnet-fa1029b7"
     time_interval        = 144000
   },
 ]
